@@ -1,0 +1,40 @@
+{
+	"name": "@moll/request-a-la-fetch",
+	"version": "0.0.0",
+	"description": "",
+	"keywords": [],
+	"homepage": "https://github.com/moll/node-request-a-la-fetch",
+	"bugs": "https://github.com/moll/node-request-a-la-fetch/issues",
+
+	"author": {
+		"name": "Andri Möll",
+		"email": "andri@dot.ee",
+		"url": "http://themoll.com"
+	},
+
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/moll/node-request-a-la-fetch.git"
+	},
+
+	"licenses": [{
+		"type": "LAGPL",
+		"url": "https://github.com/moll/node-request-a-la-fetch/blob/master/LICENSE"
+	}],
+
+	"main": "request.js",
+	"scripts": {"test": "make test"},
+
+	"dependencies": {
+    "node-fetch": ">= 1.3.0 < 2",
+    "oolong": ">= 1 < 2",
+    "lazy-object": ">= 1 < 2"
+	},
+
+	"devDependencies": {
+		"mocha": ">= 2.1.0 < 3",
+		"co-mocha": ">= 1.0.0 < 2",
+		"must": ">= 0.13.0 < 0.14",
+		"mitm": "^1.2.0"
+	}
+}
