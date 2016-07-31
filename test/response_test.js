@@ -80,7 +80,7 @@ describe("Response", function() {
       var res = new Response(yield request(URL))
       var body = yield res.arrayBuffer()
       body.must.be.an.instanceof(ArrayBuffer)
-      Buffer.compare(new Buffer(body), new Buffer("\x13\x37")).must.equal(0)
+      new Buffer(body).equals(new Buffer("\x13\x37")).must.be.true()
     })
 
     it("must return body if longer than one chunk", function*() {
@@ -95,7 +95,7 @@ describe("Response", function() {
       var res = new Response(yield request(URL))
       var body = yield res.arrayBuffer()
       body.must.be.an.instanceof(ArrayBuffer)
-      Buffer.compare(new Buffer(body), new Buffer("\x13\x37\x42")).must.equal(0)
+      new Buffer(body).equals(new Buffer("\x13\x37\x42")).must.be.true()
     })
 
     it("must reject when requested twice", function*() {
