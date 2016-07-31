@@ -22,7 +22,7 @@ defineLazyProperty(Response.prototype, "headers", function() {
 // Firefox throws it with "Body has already been consumed.".
 // https://fetch.spec.whatwg.org/#response-class
 Response.prototype.arrayBuffer = function() {
-  // NOTE: Error has to be returned in a promise.
+  // Error has to be returned in a promise.
   if (this.bodyUsed) return Promise.reject(new TypeError(BODY_USED_ERR))
   this.bodyUsed = true
 
@@ -31,7 +31,7 @@ Response.prototype.arrayBuffer = function() {
 
   return new Promise(function(resolve, reject) {
     res.on("data", function(chunk) { chunks.push(chunk) })
-    res.on("end", function(chunk) { resolve(Buffer.concat(chunks)) })
+    res.on("end", function(chunk) { resolve(bufferize(chunks)) })
     res.once("error", reject)
   })
 }
@@ -46,13 +46,11 @@ Response.prototype.formData = function() {
 
 // https://fetch.spec.whatwg.org/#dom-body-text
 Response.prototype.text = function() {
-  return this.arrayBuffer().then(function(buffer) {
-    return buffer.toString("utf8")
-  })
+  return this.arrayBuffer().then(Buffer).then(utf8ize)
 }
 
 Response.prototype.json = function() {
-  return this.text().then(JSON.parse)
+  return this.arrayBuffer().then(Buffer).then(JSON.parse)
 }
 
 Response.prototype.clone = function() {
@@ -65,4 +63,19 @@ Response.prototype.toNode = function() {
 
 Response.prototype.valueOf = Response.prototype.toNode
 
+function bufferize(buffers) {
+  var length = buffers.map(function(buf) { return buf.length }).reduce(add, 0)
+  var array = new Uint8Array(length)
+
+  for (var i = 0, offset = 0; i < buffers.length; ++i) {
+    var buffer = buffers[i]
+    array.set(buffer, offset)
+    offset += buffer.length
+  }
+
+  return array.buffer
+}
+
+function add(a, b) { return a + b }
 function desire(name) { return require.resolve(name) && require(name) }
+function utf8ize(buffer) { return buffer.toString("utf8") }

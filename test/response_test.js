@@ -79,8 +79,23 @@ describe("Response", function() {
 
       var res = new Response(yield request(URL))
       var body = yield res.arrayBuffer()
-      body.must.be.an.instanceof(Buffer)
-      Buffer.compare(body, new Buffer("\x13\x37")).must.equal(0)
+      body.must.be.an.instanceof(ArrayBuffer)
+      Buffer.compare(new Buffer(body), new Buffer("\x13\x37")).must.equal(0)
+    })
+
+    it("must return body if longer than one chunk", function*() {
+      this.mitm.on("request", function(req, res) {
+        res.writeHead(200, {"Content-Type": "application/octet-stream"})
+        res.write("\x13")
+        res.write("\x37")
+        res.write("\x42")
+        res.end()
+      })
+
+      var res = new Response(yield request(URL))
+      var body = yield res.arrayBuffer()
+      body.must.be.an.instanceof(ArrayBuffer)
+      Buffer.compare(new Buffer(body), new Buffer("\x13\x37\x42")).must.equal(0)
     })
 
     it("must reject when requested twice", function*() {
