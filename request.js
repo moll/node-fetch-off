@@ -31,7 +31,4 @@ function write(req, body) {
   }
 }
 
-function typeOf(value) {
-  if (value === null) return "null"
-  return typeof value
-}
+function typeOf(value) { return value === null ? "null" : typeof value }
