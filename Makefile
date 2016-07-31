@@ -1,5 +1,5 @@
 NODE = node
-NODE_OPTS =
+NODE_OPTS = --use-strict
 TEST_OPTS =
 
 love:
