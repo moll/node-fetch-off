@@ -9,6 +9,15 @@ describe("Response", function() {
   beforeEach(function() { this.mitm = Mitm() })
   afterEach(function() { this.mitm.disable() })
 
+  it("must be a basic response", function*() {
+    this.mitm.on("request", function(req, res) {
+      res.writeHead(200)
+      res.end()
+    })
+
+    new Response(yield request(URL)).type.must.equal("basic")
+  })
+
   it("must set status code and message", function*() {
     this.mitm.on("request", function(req, res) {
       res.writeHead(203, "Simon Said")
