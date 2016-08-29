@@ -1,4 +1,6 @@
 var Mitm = require("mitm")
+var Headers = require("../headers");
+var Response = require("../response");
 var fetch = require("..")
 
 describe("fetch", function() {
@@ -23,6 +25,18 @@ describe("fetch", function() {
 		res.type.must.equal("basic")
     res.status.must.equal(203)
     res.statusText.must.equal("Simon Said")
+	})
+
+	describe(".Headers", function() {
+		it("must equal Reponse", function() {
+			fetch.Headers.must.equal(Headers)
+		})
+	})
+
+	describe(".Response", function() {
+		it("must equal Reponse", function() {
+			fetch.Response.must.equal(Response)
+		})
 	})
 })
 

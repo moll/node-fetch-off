@@ -1,4 +1,4 @@
-var Headers = desire("node-fetch/lib/headers") || require("node-fetch").Headers
+var Headers = require("./headers")
 var defineLazyProperty = require("lazy-object").defineLazyProperty
 var BODY_USED_ERR = "Body has already been consumed."
 module.exports = Response
@@ -77,5 +77,4 @@ function bufferize(buffers) {
 }
 
 function add(a, b) { return a + b }
-function desire(name) { return require.resolve(name) && require(name) }
 function utf8ize(buffer) { return buffer.toString("utf8") }
