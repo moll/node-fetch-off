@@ -1,3 +1,6 @@
+## Unreleased
+- Adds `fetch` function to combine `request` and `Response` instantiation.
+
 ## 0.2.0 (Jul 31, 2016)
 - Makes `Response.prototype.arrayBuffer` standard-compliant by returning `ArrayBuffer`.
 
