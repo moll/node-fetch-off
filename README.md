@@ -1,12 +1,14 @@
 FetchOff.js
 ===========
 [![NPM version][npm-badge]](https://www.npmjs.com/package/fetch-off)
+[![Build status][travis-badge]](https://travis-ci.org/moll/node-fetch-off)
 
 FetchOff.js is a **[Fetch API][fetch] polyfill and facade for Node.js**. That is, it allows you to use the Fetch interface you might be familiar with in the browser to make web requests from Node.js, getting back either a Fetch compatible `Response` object or Node.js's own `IncomingMessage` (like you would from vanilla `Http.get()`). In the latter respect it's a unique polyfill library — you have an option to use Fetch for requests, but still get the full streaming power of Node.js's responses.
 
 FetchOff.js doesn't yet fully match the living Fetch API — it's missing redirect support for example — but for the common case it's sufficient.
 
 [npm-badge]: https://img.shields.io/npm/v/fetch-off.svg
+[travis-badge]: https://travis-ci.org/moll/node-fetch-off.png?branch=master
 [fetch]: https://developer.mozilla.org/en/docs/Web/API/Fetch_API
 
 
