@@ -1,10 +1,10 @@
 {
-	"name": "@moll/request-a-la-fetch",
+	"name": "@moll/fetch-off",
 	"version": "0.2.0",
 	"description": "",
 	"keywords": [],
-	"homepage": "https://github.com/moll/node-request-a-la-fetch",
-	"bugs": "https://github.com/moll/node-request-a-la-fetch/issues",
+	"homepage": "https://github.com/moll/node-fetch-off",
+	"bugs": "https://github.com/moll/node-fetch-off/issues",
 
 	"author": {
 		"name": "Andri Möll",
@@ -14,12 +14,12 @@
 
 	"repository": {
 		"type": "git",
-		"url": "git://github.com/moll/node-request-a-la-fetch.git"
+		"url": "git://github.com/moll/node-fetch-off.git"
 	},
 
 	"licenses": [{
 		"type": "LAGPL",
-		"url": "https://github.com/moll/node-request-a-la-fetch/blob/master/LICENSE"
+		"url": "https://github.com/moll/node-fetch-off/blob/master/LICENSE"
 	}],
 
 	"main": "fetch.js",
