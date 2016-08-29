@@ -1,5 +1,5 @@
 var Mitm = require("mitm")
-var fetch = require("../fetch")
+var fetch = require("..")
 
 describe("fetch", function() {
   beforeEach(function() { this.mitm = Mitm() })

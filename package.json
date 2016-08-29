@@ -22,7 +22,7 @@
 		"url": "https://github.com/moll/node-request-a-la-fetch/blob/master/LICENSE"
 	}],
 
-	"main": "request.js",
+	"main": "fetch.js",
 	"scripts": {"test": "make test"},
 
 	"dependencies": {
