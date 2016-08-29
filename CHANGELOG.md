@@ -1,4 +1,4 @@
-## Unreleased
+## 1.0.0 (Aug 29, 2016)
 - Adds `fetch` function to combine `request` and `Response` instantiation.
 - Makes said `fetch` function the default export.
 - Renames to FetchOff.js.
