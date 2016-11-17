@@ -97,7 +97,7 @@ describe("Request", function() {
 
       // Using `demand` prevents slow serialization if abort is set.
       req.res.end("Bye")
-      demand(res.req.aborted).be.undefined() 
+      demand(res.req.aborted).be.undefined()
       yield wait(res, "data").must.then.equal("Bye")
     })
 
