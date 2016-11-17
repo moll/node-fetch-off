@@ -47,11 +47,11 @@ Response.prototype.formData = function() {
 
 // https://fetch.spec.whatwg.org/#dom-body-text
 Response.prototype.text = function() {
-  return this.arrayBuffer().then(Buffer).then(utf8ize)
+  return this.arrayBuffer().then(Buffer.from).then(utf8ize)
 }
 
 Response.prototype.json = function() {
-  return this.arrayBuffer().then(Buffer).then(JSON.parse)
+  return this.arrayBuffer().then(Buffer.from).then(JSON.parse)
 }
 
 Response.prototype.clone = function() {
