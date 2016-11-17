@@ -1,10 +1,12 @@
 var Headers = require("./headers")
 var defineLazyProperty = require("lazy-object").defineLazyProperty
 var BODY_USED_ERR = "Body has already been consumed."
+var define = Object.defineProperty
 module.exports = Response
 
 function Response(res) {
-  this.response = res
+  define(this, "response", {value: res, configurable: true, writable: true})
+
   this.status = res.statusCode
   this.statusText = res.statusMessage
   this.ok = res.statusCode >= 200 && res.statusCode < 300
