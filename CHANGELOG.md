@@ -1,4 +1,4 @@
-## Unreleased
+## 1.1.0 (Nov 17, 2016)
 - Adds `response.url`.
 
 ## 1.0.0 (Aug 29, 2016)
