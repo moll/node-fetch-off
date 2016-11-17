@@ -58,7 +58,7 @@ describe("request", function() {
 
   describe("given timeout", function() {
     beforeEach(function() {
-      this.time = Sinon.useFakeTimers("Date", "setTimeout", "clearTimeout")
+      this.time = Sinon.useFakeTimers("setTimeout", "clearTimeout")
     })
     afterEach(function() { this.time.restore() })
 
