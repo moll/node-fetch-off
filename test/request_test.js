@@ -4,7 +4,7 @@ var IncomingMessage = require("http").IncomingMessage
 var request = require("../request")
 var demand = require("must")
 
-describe("Request", function() {
+describe("request", function() {
   beforeEach(function() { this.mitm = Mitm() })
   afterEach(function() { this.mitm.disable() })
 

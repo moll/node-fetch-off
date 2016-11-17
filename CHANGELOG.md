@@ -1,3 +1,7 @@
+## Unreleased
+- Adds a minimal Fetch API `Request` class.  
+  Available from `require("fetch-off").Request`.
+
 ## 1.2.0 (Nov 17, 2016)
 - Adds a non-standard `timeout` option for timing out the request if no initial response arrives in the given milliseconds.  
   Internally waits for Node's `response` event which fires once HTTP headers are received. Note that this is different from Node's `Socket.prototype.setTimeout`, which fires if the connection is idle.

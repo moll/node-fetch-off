@@ -1,5 +1,6 @@
 var Mitm = require("mitm")
 var Headers = require("../headers");
+var Request = require("../fetch_request");
 var Response = require("../response");
 var fetch = require("..")
 
@@ -30,6 +31,12 @@ describe("fetch", function() {
 	describe(".Headers", function() {
 		it("must equal Reponse", function() {
 			fetch.Headers.must.equal(Headers)
+		})
+	})
+
+	describe(".Request", function() {
+		it("must equal Reponse", function() {
+			fetch.Request.must.equal(Request)
 		})
 	})
 
