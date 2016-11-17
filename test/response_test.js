@@ -1,6 +1,7 @@
 var O = require("oolong")
 var Url = require("url")
 var Http = require("http")
+var Https = require("https")
 var Mitm = require("mitm")
 var Response = require("../response")
 var URL = "http://example.com"
@@ -45,6 +46,18 @@ describe("Response", function() {
     })
 
     new Response(yield request(URL)).ok.must.be.true()
+  })
+
+  it("must set url if HTTP", function*() {
+    this.mitm.on("request", function(req, res) { res.end() })
+    var res = new Response(yield request("http://example.com/models?age=42"))
+    res.url.must.equal("http://example.com/models?age=42")
+  })
+
+  it("must set url if HTTPS", function*() {
+    this.mitm.on("request", function(req, res) { res.end() })
+    var res = new Response(yield request("https://example.com/models?age=42"))
+    res.url.must.equal("https://example.com/models?age=42")
   })
 
   it("must not set body used", function*() {
@@ -183,7 +196,9 @@ describe("Response", function() {
 })
 
 function request(url, opts) {
-  var req = Http.request(O.assign(Url.parse(url), opts))
+  url = Url.parse(url)
+  var Web = url.protocol === "https:" ? Https : Http
+  var req = Web.request(O.assign(url, opts))
   req.end()
   return new Promise(resolve.bind(null, req))
 }

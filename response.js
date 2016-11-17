@@ -8,6 +8,7 @@ function Response(res) {
   this.status = res.statusCode
   this.statusText = res.statusMessage
   this.ok = res.statusCode >= 200 && res.statusCode < 300
+  this.url = getResponseUrl(res)
   this.bodyUsed = !res.readable
 }
 
@@ -62,6 +63,13 @@ Response.prototype.toNode = function() {
 }
 
 Response.prototype.valueOf = Response.prototype.toNode
+
+function getResponseUrl(res) {
+  var protocol = res.req.connection.encrypted ? "https" : "http"
+  var host = res.req.getHeader("host")
+  var path = res.req.path
+  return protocol + "://" + host + path
+}
 
 function bufferize(buffers) {
   var length = buffers.map(function(buf) { return buf.length }).reduce(add, 0)
