@@ -44,6 +44,21 @@ describe("request", function() {
     req.read().must.equal("Hello")
   })
 
+  it("must request body of Buffer", function*() {
+    request("http://example.com/models", {
+      method: "post",
+      body: new Buffer("Hello")
+    })
+
+    var req = yield wait(this.mitm, "request")
+    req.method.must.equal("POST")
+    req.headers.host.must.equal("example.com")
+    req.url.must.equal("/models")
+
+    req.setEncoding("utf8")
+    req.read().must.equal("Hello")
+  })
+
   it("must resolve with IncomingMessage", function*() {
     this.mitm.on("request", function(req, res) {
       res.writeHead(200, {"Content-Type": "plain/text"})

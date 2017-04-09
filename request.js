@@ -26,7 +26,8 @@ function write(req, body) {
   var type = typeOf(body)
 
   switch (type) {
-    case "string": req.write(body); break
+    case "string":
+    case "buffer": req.write(body); break
     case "null": break
     case "undefined": break
     default: throw new TypeError("Invalid body type: " + type)
@@ -50,4 +51,8 @@ function timeoutAbort(req) {
   req.emit("timeout", err)
 }
 
-function typeOf(value) { return value === null ? "null" : typeof value }
+function typeOf(value) {
+  if (value === null) return "null"
+  if (value instanceof Buffer) return "buffer"
+  return typeof value
+}

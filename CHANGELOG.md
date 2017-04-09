@@ -1,3 +1,6 @@
+## Unreleased
+- Adds support for fetching with a `Buffer` body.
+
 ## 1.3.0 (Nov 17, 2016)
 - Adds a minimal Fetch API `Request` class.  
   Available from `require("fetch-off").Request`.
