@@ -1,6 +1,6 @@
 {
 	"name": "fetch-off",
-	"version": "1.3.0",
+	"version": "1.4.0",
 	"description": "Fetch API polyfill and facade. Its request and response wrappers can be used separately: use fetch for request yet get back Node's Http.get response (IncomingMessage) for streaming.",
 	"keywords": [
 		"fetch",
