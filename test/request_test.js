@@ -60,7 +60,7 @@ describe("request", function() {
   })
 
   it("must resolve with IncomingMessage", function*() {
-    this.mitm.on("request", function(req, res) {
+    this.mitm.on("request", function(_req, res) {
       res.writeHead(200, {"Content-Type": "plain/text"})
       res.end("Hello")
     })
@@ -79,19 +79,19 @@ describe("request", function() {
 
     it("must connect if quicker than given milliseconds", function*() {
       var res = request("http://example.com/models", {timeout: 10000})
-      this.mitm.on("request", (req, res) => (this.time.tick(9999), res.end()))
+      this.mitm.on("request", (_req, res) => (this.time.tick(9999), res.end()))
       yield res.must.then.be.an.instanceof(IncomingMessage)
     })
 
     it("must connect if no timeout given", function*() {
       var res = request("http://example.com/models", {})
-      this.mitm.on("request", (req, res) => (this.time.tick(999666), res.end()))
+      this.mitm.on("request", (_r, res) => (this.time.tick(999666), res.end()))
       yield res.must.then.be.an.instanceof(IncomingMessage)
     })
 
     it("must connect if timeout zero", function*() {
       var res = request("http://example.com/models", {timeout: 0})
-      this.mitm.on("request", (req, res) => (this.time.tick(999666), res.end()))
+      this.mitm.on("request", (_r, res) => (this.time.tick(999666), res.end()))
       yield res.must.then.be.an.instanceof(IncomingMessage)
     })
 
