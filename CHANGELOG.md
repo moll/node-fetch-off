@@ -1,3 +1,6 @@
+## Unreleased
+- Adds support for Node.js to automatically set the `Content-Length`.
+
 ## 1.4.0 (Jul 4, 2017)
 - Adds support for fetching with a `Buffer` body.
 

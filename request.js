@@ -9,9 +9,8 @@ function request(url, opts) {
   var Web = url.protocol === "https:" ? Https : Http
 
   var req = Web.request(assign({}, opts, url))
-  if (opts && "body" in opts) write(req, opts.body)
   if (opts && "timeout" in opts && opts.timeout > 0) timeout(req, opts.timeout)
-  req.end()
+  end(req, opts ? opts.body : null)
 
   return new Promise(resolve.bind(null, req))
 }
@@ -22,16 +21,13 @@ function resolve(req, resolve, reject) {
   req.once("error", reject)
 }
 
-function write(req, body) {
-  var type = typeOf(body)
-
-  switch (type) {
-    case "string":
-    case "buffer": req.write(body); break
-    case "null": break
-    case "undefined": break
-    default: throw new TypeError("Invalid body type: " + type)
-  }
+function end(req, body) {
+  // As of Oct 15, 2018, Node.js still only sets Content-Length if you give
+  // the body to OutoingMessage.prototype.end:
+  // https://github.com/nodejs/node/blob/v6.x/lib/_http_outgoing.js#L547
+  if (body === null || body === undefined) req.end()
+  else if (typeof body == "string" || body instanceof Buffer) req.end(body)
+  else throw new TypeError("Invalid body: " + body)
 }
 
 function timeout(req, timeout) {
@@ -49,10 +45,4 @@ function timeoutAbort(req) {
   var err = new Error("Fetch Timeout")
   err.code = "ETIMEDOUT"
   req.emit("timeout", err)
-}
-
-function typeOf(value) {
-  if (value === null) return "null"
-  if (value instanceof Buffer) return "buffer"
-  return typeof value
 }

@@ -32,31 +32,67 @@ describe("request", function() {
     req.url.must.equal("/models")
   })
 
-  it("must request given URL and body", function*() {
-    request("http://example.com/models", {method: "post", body: "Hello"})
+  describe("given String body", function() {
+    it("must request", function*() {
+      request("http://example.com/models", {method: "post", body: "Hello"})
 
-    var req = yield wait(this.mitm, "request")
-    req.method.must.equal("POST")
-    req.headers.host.must.equal("example.com")
-    req.url.must.equal("/models")
+      var req = yield wait(this.mitm, "request")
+      req.method.must.equal("POST")
+      req.headers.host.must.equal("example.com")
+      req.url.must.equal("/models")
 
-    req.setEncoding("utf8")
-    req.read().must.equal("Hello")
-  })
-
-  it("must request body of Buffer", function*() {
-    request("http://example.com/models", {
-      method: "post",
-      body: new Buffer("Hello")
+      req.setEncoding("utf8")
+      req.read().must.equal("Hello")
     })
 
-    var req = yield wait(this.mitm, "request")
-    req.method.must.equal("POST")
-    req.headers.host.must.equal("example.com")
-    req.url.must.equal("/models")
+    it("must request with Content-Length set by Node", function*() {
+      request("http://example.com", {
+        method: "post",
+        headers: {"Content-Type": "text/plain; charset=utf-8"},
+        body: "H€llo!"
+      })
 
-    req.setEncoding("utf8")
-    req.read().must.equal("Hello")
+      var req = yield wait(this.mitm, "request")
+      req.method.must.equal("POST")
+      req.headers.must.not.have.property("transfer-encoding")
+      req.headers["content-length"].must.equal("8")
+
+      req.setEncoding("utf8")
+      req.read().must.equal("H€llo!")
+    })
+  })
+
+  describe("given Buffer body", function() {
+    it("must request body of Buffer", function*() {
+      request("http://example.com/models", {
+        method: "post",
+        body: new Buffer("Hello")
+      })
+
+      var req = yield wait(this.mitm, "request")
+      req.method.must.equal("POST")
+      req.headers.host.must.equal("example.com")
+      req.url.must.equal("/models")
+
+      req.setEncoding("utf8")
+      req.read().must.equal("Hello")
+    })
+
+    it("must request with Content-Length set by Node", function*() {
+      request("http://example.com", {
+        method: "post",
+        headers: {"Content-Type": "application/octet-stream"},
+        body: new Buffer("H€llo!")
+      })
+
+      var req = yield wait(this.mitm, "request")
+      req.method.must.equal("POST")
+      req.headers.must.not.have.property("transfer-encoding")
+      req.headers["content-length"].must.equal("8")
+
+      req.setEncoding("utf8")
+      req.read().must.equal("H€llo!")
+    })
   })
 
   it("must resolve with IncomingMessage", function*() {
